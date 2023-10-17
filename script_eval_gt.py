@@ -12,7 +12,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 import configs 
 from src.data import prepare_data, selected_data
 from src.eval import eval_Mutagenicity, eval_syn, eval_syn6
-from utils.io_utils import fix_seed
+from auxillary.io_utils import fix_seed
 
 
 def main(): 

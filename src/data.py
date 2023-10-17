@@ -13,11 +13,11 @@ import random
 from types import SimpleNamespace
 
 import configs
-import utils.featgen as featgen
-import utils.io_utils as io_utils
+import auxillary.featgen as featgen
+import auxillary.io_utils as io_utils
 import src.gengraph as gengraph
 import pickle as pkl
-from utils.graph_utils import get_graph_data
+from auxillary.graph_utils import get_graph_data
 
 
 
@@ -53,15 +53,15 @@ def prepare_data(dataset, train_ratio=0.8, input_dim=None, seed=10):
             data.y.numpy(), seed=seed)
         # Amazon: 4896 train, 1224 val, 1530 test
     
-    elif dataset in ['syn1', 'syn2', 'syn4', 'syn5']: 
-        data = synthetic_data(
-            dataset, dirname, train_ratio, input_dim)
+    elif dataset in ['syn1', 'syn2', 'syn4', 'syn5']:
+        data = synthetic_data(dataset, dirname, train_ratio, input_dim)
     
     elif dataset == 'syn6':
         data = gc_data(dataset, dirname, train_ratio)
 
     elif dataset == 'Mutagenicity':
         data = gc_data(dataset, dirname, train_ratio)
+    
 
     return data
 

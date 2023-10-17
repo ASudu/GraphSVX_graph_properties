@@ -11,7 +11,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import configs
-from utils.io_utils import fix_seed
+from auxillary.io_utils import fix_seed
 from src.data import prepare_data
 from src.explainers import GraphSVX
 from src.train import evaluate, test

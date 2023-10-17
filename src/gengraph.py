@@ -2,9 +2,9 @@
    Generating and manipulaton the synthetic graphs needed for the paper's experiments.
 """
 
-import utils.io_utils as io_utils
-from utils import featgen
-from utils import synthetic_structsim
+import auxillary.io_utils as io_utils
+from auxillary import featgen
+from auxillary import synthetic_structsim
 import torch
 import torch_geometric
 from tensorboardX import SummaryWriter

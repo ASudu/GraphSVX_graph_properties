@@ -11,7 +11,7 @@ import torch.optim as optim
 from sklearn.metrics import f1_score
 from tqdm import tqdm
 import os
-from utils.graph_utils import GraphSampler
+from auxillary.graph_utils import GraphSampler
 from torch.autograd import Variable
 
 

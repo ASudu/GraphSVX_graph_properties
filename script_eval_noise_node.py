@@ -14,7 +14,7 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 
 from src.eval import filter_useless_nodes
 from src.eval_multiclass import filter_useless_nodes_multiclass
-from utils.io_utils import fix_seed
+from auxillary.io_utils import fix_seed
 
 
 def main():

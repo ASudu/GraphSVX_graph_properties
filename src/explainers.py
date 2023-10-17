@@ -20,7 +20,7 @@ from sklearn.linear_model import (LassoLars, Lasso,
 from sklearn.metrics import r2_score
 from torch.autograd import Variable
 from torch.utils.data import DataLoader, TensorDataset
-from torch_geometric.nn import GNNExplainer as GNNE
+from torch_geometric.explain import GNNExplainer as GNNE
 from torch_geometric.nn import MessagePassing
 
 from src.models import LinearRegressionModel
@@ -135,7 +135,7 @@ class GraphSVX():
                     args_hv = 'Smarter' 
             else: 
                 feat_idx, discarded_feat_idx = self.feature_selection(node_index, args_feat)
-
+            
             # M: total number of features + neighbours considered for node v
             if regu==1 or D==0: 
                 D=0

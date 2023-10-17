@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 import scipy as sc
 import matplotlib.pyplot as plt
+import pickle
 
 import networkx as nx
 import tensorboardX
@@ -21,8 +22,7 @@ from torch.autograd import Variable
 
 # Only necessary to rebuild the Chemistry example
 # from rdkit import Chem
-
-import utils.featgen as featgen
+import auxillary.featgen as featgen
 
 use_cuda = torch.cuda.is_available()
 
@@ -661,7 +661,7 @@ def build_aromaticity_dataset():
 
 
 def gen_train_plt_name(args):
-	return "results/" + io_utils.gen_prefix(args) + ".png"
+	return "results/" + gen_prefix(args) + ".png"
 
 
 def log_assignment(assign_tensor, writer, epoch, batch_idx):

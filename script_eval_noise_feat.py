@@ -13,7 +13,7 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 import configs
-from utils.io_utils import fix_seed
+from auxillary.io_utils import fix_seed
 from src.eval_multiclass import filter_useless_features_multiclass
 from src.eval import filter_useless_features
 

@@ -102,9 +102,11 @@ def arg_parse():
     # args_coal: 'NewSmarterSeparate', 'SmarterSeparate', 'Smarter', 'Smart', 'Random', 'All'
     # args_g: 'WLS', 'WLR', 'WLR_sklearn', 'WLR_Lasso'
 
+    # Modified the indexes from [500,600] to list(range(400,700,5)) to suit setting
+    # of the other explainers I tested (author: Sudarshan)
     parser.set_defaults(dataset='syn1',
                         model='GCN',
-                        indexes=[500, 600],
+                        indexes=list(range(400,700,5)),
                         num_samples=400,
                         fullempty=None,
                         S=1,

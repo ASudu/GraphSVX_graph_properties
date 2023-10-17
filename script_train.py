@@ -17,7 +17,7 @@ from src.data import prepare_data
 from src.models import GAT, GCN, GcnEncoderGraph, GcnEncoderNode, GCNNet
 from src.train import evaluate, train_and_val, train_gc, train_syn
 from src.utils import *
-from utils.io_utils import fix_seed
+from auxillary.io_utils import fix_seed
 
 
 def main():
