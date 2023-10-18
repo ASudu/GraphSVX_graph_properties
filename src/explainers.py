@@ -93,6 +93,8 @@ class GraphSVX():
         phi_list = []
         for node_index in node_indexes:
 
+            print(f"Explaining node #{node_index}")
+
             # Compute true prediction for original instance via explained GNN model
             if self.gpu: 
                 device = torch.device(
@@ -128,14 +130,20 @@ class GraphSVX():
 
             # --- Feature selection ---
             if args_hv == 'compute_pred_subgraph':
+                print("I'm here")
                 feat_idx, discarded_feat_idx = self.feature_selection_subgraph(node_index, args_feat)
                 # Also solve incompatibility due to overlap feat/node importance
                 if args_hv == 'SmarterSeparate' or args_hv == 'NewSmarterSeparate':
                     print('Incompatibility: user Smarter sampling instead')
                     args_hv = 'Smarter' 
-            else: 
+            else:
+                print("I'm not here")
                 feat_idx, discarded_feat_idx = self.feature_selection(node_index, args_feat)
             
+            print(f"D: {D}")
+            print(f"F:{self.F}")
+            print(f"regu:{regu}")
+
             # M: total number of features + neighbours considered for node v
             if regu==1 or D==0: 
                 D=0
@@ -165,6 +173,8 @@ class GraphSVX():
 
             # --- EXPLANATION GENERATOR --- 
             # Train Surrogate Weighted Linear Regression - learns shapley values
+            # In the linear regression: y = w_0x_0 + w_1x_1 + .... + w_nx_n + b
+            # phi = (w_0, w_1, ..., w_n) and base_value = b
             phi, base_value = eval('self.' + args_g)(z_,
                                                     weights, fz, multiclass, info)
 
@@ -402,6 +412,7 @@ class GraphSVX():
                     #num = int( num_samples * ( self.F/self.M + ((regu - 0.5)/0.5)  * (self.F/self.M) ) )    
                 else: 
                     num = int(0.5* num_samples/2 + 0.5 * num_samples * self.F/self.M)
+
                 # Features only
                 z_bis = eval('self.' + args_coal)(num, args_K, 1)  
                 z_bis = z_bis[torch.randperm(z_bis.size()[0])]
@@ -409,6 +420,7 @@ class GraphSVX():
                 weights[:num] = self.shapley_kernel(s, self.F)
                 z_ = torch.zeros(num_samples, self.M)
                 z_[:num, :self.F] = z_bis
+
                 # Node only
                 z_bis = eval('self.' + args_coal)(
                     num_samples-num, args_K, 0)  
@@ -667,6 +679,7 @@ class GraphSVX():
         """
         # Define empty and full coalitions
         z_ = torch.ones(num_samples, self.M)
+        # z[start:stop:step]. So here z[1::2] means: Get elements from index 1 and choose every second element after that
         z_[1::2] = torch.zeros(num_samples//2, self.M)
         i = 2
         k = 1
@@ -1369,6 +1382,7 @@ class GraphSVX():
         weights = weights.detach().numpy()
         z_ = z_.detach().numpy()
         fz = fz.detach().numpy()
+        print(f"z_: {z_.shape}")
 
         # Fit weighted linear regression
         reg = LinearRegression()
