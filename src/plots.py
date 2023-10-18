@@ -104,8 +104,7 @@ def visualize_subgraph(model, node_idx, edge_index, edge_mask, num_hops, y=None,
         ax.annotate(
             '', xy=pos[target], xycoords='data', xytext=pos[source],
             textcoords='data', arrowprops=dict(
-                arrowstyle="->",
-                alpha=max(data['att']*2, 0.05),
+                arrowstyle="->", alpha = 0.05,
                 shrinkA=sqrt(node_kwargs['node_size']) / 2.0,
                 shrinkB=sqrt(node_kwargs['node_size']) / 2.0,
                 connectionstyle="arc3,rad=0.1",
