@@ -92,8 +92,9 @@ class GraphSVX():
         # Explain several nodes sequentially 
         phi_list = []
         for node_index in node_indexes:
-
+            print("===============================")
             print(f"Explaining node #{node_index}")
+            print("===============================")
 
             # Compute true prediction for original instance via explained GNN model
             if self.gpu: 
@@ -130,14 +131,12 @@ class GraphSVX():
 
             # --- Feature selection ---
             if args_hv == 'compute_pred_subgraph':
-                print("I'm here")
                 feat_idx, discarded_feat_idx = self.feature_selection_subgraph(node_index, args_feat)
                 # Also solve incompatibility due to overlap feat/node importance
                 if args_hv == 'SmarterSeparate' or args_hv == 'NewSmarterSeparate':
                     print('Incompatibility: user Smarter sampling instead')
                     args_hv = 'Smarter' 
             else:
-                print("I'm not here")
                 feat_idx, discarded_feat_idx = self.feature_selection(node_index, args_feat)
             
             print(f"D: {D}")
@@ -189,6 +188,7 @@ class GraphSVX():
             if info:
                 self.print_info(D, node_index, phi, feat_idx,
                                 true_pred, true_conf, base_value, multiclass)
+                
 
             # Visualise
             if vizu:
@@ -1598,6 +1598,8 @@ class GraphSVX():
             phi = torch.tensor(phi[predicted_class, :])
         else:
             phi = torch.from_numpy(phi).float()
+
+            # Get the node importances
 
         # Replace False by 0, True by 1 in edge_mask
         mask = edge_mask.int().float()
