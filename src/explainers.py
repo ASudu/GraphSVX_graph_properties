@@ -1648,8 +1648,17 @@ class GraphSVX():
                                    hops,
                                    y=self.data.y,
                                    threshold=None)
+        
+        G1 = G.to_undirected()
+        masked_subgraph = nx.to_numpy_array(G1)
 
-        plt.savefig('results/GS1_{}_{}_{}'.format(self.data.name,
+        # Save the subgraph
+        file_name = 'masked_adj_' + self.data.name + '_explain_node_' + str(node_index) + '.npy'
+        with open(os.path.join('results\\exp_mask_adj',file_name), 'wb') as outfile:
+            np.save(outfile, masked_subgraph)
+        
+
+        plt.savefig('results/GS1/GS1_{}_{}_{}'.format(self.data.name,
                                                   self.model.__class__.__name__,
                                                   node_index),
                     bbox_inches='tight')
@@ -1668,7 +1677,7 @@ class GraphSVX():
                   edge_vmax=None,
                   args=None)
 
-        plt.savefig('results/GS_{}_{}_{}'.format(self.data.name,
+        plt.savefig('results/GS/GS_{}_{}_{}'.format(self.data.name,
                                                  self.model.__class__.__name__,
                                                  node_index),
                     bbox_inches='tight')
