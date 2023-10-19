@@ -1604,12 +1604,12 @@ class GraphSVX():
             node_mask = np.zeros(self.data.num_nodes)
             for i in range(len(self.neighbours)):
                 node_mask[self.neighbours[i]] = phi[i]
-            print(f"Node mask: {node_mask}")
 
             # Save the mask
             file_name = 'node_mask_' + self.data.name + '_explain_node_' + str(node_index) + '.npy'
-            with open(os.path.join('\\results\\masks',file_name), 'wb') as outfile:
+            with open(os.path.join('results\\node_masks',file_name), 'wb') as outfile:
                 np.save(outfile, node_mask)
+            # print(f"Path: {str(outfile)}")
 
         # Replace False by 0, True by 1 in edge_mask
         mask = edge_mask.int().float()
