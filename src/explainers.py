@@ -3,6 +3,7 @@
     Define the different explainers: GraphSVX and baselines
 """
 # Import packages
+import os
 import random
 import time
 from copy import deepcopy
@@ -139,9 +140,9 @@ class GraphSVX():
             else:
                 feat_idx, discarded_feat_idx = self.feature_selection(node_index, args_feat)
             
-            print(f"D: {D}")
-            print(f"F:{self.F}")
-            print(f"regu:{regu}")
+            # print(f"D: {D}")
+            # print(f"F:{self.F}")
+            # print(f"regu:{regu}")
 
             # M: total number of features + neighbours considered for node v
             if regu==1 or D==0: 
@@ -1599,7 +1600,16 @@ class GraphSVX():
         else:
             phi = torch.from_numpy(phi).float()
 
-            # Get the node importances
+            # Save the node importance
+            node_mask = np.zeros(self.data.num_nodes)
+            for i in range(len(self.neighbours)):
+                node_mask[self.neighbours[i]] = phi[i]
+            print(f"Node mask: {node_mask}")
+
+            # Save the mask
+            file_name = 'node_mask_' + self.data.name + '_explain_node_' + str(node_index) + '.npy'
+            with open(os.path.join('\\results\\masks',file_name), 'wb') as outfile:
+                np.save(outfile, node_mask)
 
         # Replace False by 0, True by 1 in edge_mask
         mask = edge_mask.int().float()
