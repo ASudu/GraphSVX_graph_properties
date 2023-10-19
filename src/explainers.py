@@ -92,6 +92,7 @@ class GraphSVX():
 
         # Explain several nodes sequentially 
         phi_list = []
+        print(f"data size: {self.data.num_nodes}")
         for node_index in node_indexes:
             print("===============================")
             print(f"Explaining node #{node_index}")

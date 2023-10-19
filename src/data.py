@@ -11,6 +11,7 @@ import numpy as np
 import os as os
 import random
 from types import SimpleNamespace
+import networkx as nx
 
 import configs
 import auxillary.featgen as featgen
@@ -260,6 +261,13 @@ def synthetic_data(dataset, dirname, train_ratio=0.8, input_dim=10):
             G, labels, name = gengraph.gen_syn2()
             input_dim = len(G.nodes[0]["feat"])
 
+        # Save adjacency matrix
+        fname = 'adj_matrix_' + dataset + '.npy'
+        adj = nx.to_numpy_array(G)
+        with open(os.path.join('results\\data_adj',fname), 'wb') as outfile:
+            np.save(outfile, adj)
+        print(f"Network size:{len(G)}")
+        print(f"Saved adjacency matrix in: {str(outfile)}")
         # Create dataset
         data = SimpleNamespace()
         data.x, data.edge_index, data.y = gengraph.preprocess_input_graph(
