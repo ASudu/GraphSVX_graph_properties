@@ -12,7 +12,7 @@ ipython_config.py
 
 # Files to 
 .vscode/
-data/
+data/MNIST.pkl
 data/Amazon/
 data/Cora/
 data/PubMed/

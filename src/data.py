@@ -4,6 +4,7 @@
 """
 from torch_geometric.datasets import PPI, Amazon, Planetoid, Reddit
 from torch_geometric.data import Data
+from torch.utils.data import DataLoader
 from sklearn.model_selection import train_test_split
 import torch_geometric.transforms as T
 import torch
@@ -19,6 +20,7 @@ import auxillary.io_utils as io_utils
 import src.gengraph as gengraph
 import pickle as pkl
 from auxillary.graph_utils import get_graph_data
+from data.superpixels import SuperPixDataset, SuperPixDatasetDGL
 
 
 
