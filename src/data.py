@@ -63,6 +63,9 @@ def prepare_data(dataset, train_ratio=0.8, input_dim=None, seed=10):
     elif dataset == 'Mutagenicity':
         data = gc_data(dataset, dirname, train_ratio)
     
+    elif dataset == 'MNIST':
+        data = gc_data(dataset, dirname, train_ratio)
+    
 
     return data
 
@@ -314,10 +317,17 @@ def gc_data(dataset, dirname, train_ratio=0.8):
             with open('data/BA-2motif.pkl', 'rb') as fin:
                 data.edge_index, data.x, data.y = pkl.load(fin)
             data.x = np.ones_like(data.x)
-        else:
+        
+        elif dataset == 'Mutagenicity':
             # MUTAG
             data = SimpleNamespace()
             with open('data/Mutagenicity.pkl', 'rb') as fin:
+                data.edge_index, data.x, data.y = pkl.load(fin)
+        
+        elif dataset == 'MNIST':
+            # MNIST
+            data = SimpleNamespace()
+            with open('data/MNIST.pkl', 'rb') as fin:
                 data.edge_index, data.x, data.y = pkl.load(fin)
 
         # Define NumSpace dataset
