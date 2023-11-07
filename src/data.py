@@ -328,9 +328,27 @@ def gc_data(dataset, dirname, train_ratio=0.8):
         
         elif dataset == 'MNIST':
             # MNIST
-            data = SimpleNamespace()
-            with open('data/MNIST.pkl', 'rb') as fin:
-                data.edge_index, data.x, data.y = pkl.load(fin)
+            data = SuperPixDataset(dataset)     # Train-test-val split already done (defn from PGMExplainer repo)
+
+            # Define NumSpace dataset
+            data.x = torch.FloatTensor(data.x)
+            data.edge_index = torch.FloatTensor(data.edge_index)
+            data.y = torch.LongTensor(data.y)
+            _, data.y = data.y.max(dim=1)
+            data.num_classes = 2
+            data.num_features = data.x.shape[-1]
+            data.num_nodes = data.edge_index.shape[1]
+            data.num_graphs = data.x.shape[0]
+            data.name = dataset
+
+            # Shuffle graphs 
+            p = torch.randperm(data.num_graphs)
+            data.x = data.x[p]
+            data.y = data.y[p]
+            data.edge_index = data.edge_index[p]
+
+            torch.save(data, data_path)
+            return data
 
         # Define NumSpace dataset
         data.x = torch.FloatTensor(data.x)
