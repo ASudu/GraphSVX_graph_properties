@@ -225,7 +225,7 @@ class GraphSVX():
         """ Explains prediction for a graph classification task - GraphSVX method
 
         Args:
-            node_indexes (list, optional): indexes of the nodes of interest. Defaults to [0].
+            graph_indices (list, optional): indices of the graphs of interest. Defaults to [0].
             hops (int, optional): number k of k-hop neighbours to consider in the subgraph 
                                                     around node_index. Defaults to 2.
             num_samples (int, optional): number of samples we want to form GraphSVX's new dataset. 
@@ -249,12 +249,17 @@ class GraphSVX():
                         and base value
         """
 
+        print(f"Graph indices to explain: {graph_indices}")
         # Time
         start = time.time()
 
         # --- Explain several nodes iteratively ---
         phi_list = []
+        print(f"data size (number of graphs): {self.data.num_graphs}")
         for graph_index in graph_indices:
+            print("===============================")
+            print(f"Explaining graph #{graph_index}")
+            print("===============================")
 
             # Compute true prediction for original instance via explained GNN model
             if self.gpu:
@@ -274,7 +279,7 @@ class GraphSVX():
                 range(int(self.data.edge_index.shape[1] - np.sum(np.diag(self.data.edge_index[graph_index])))))
             D = len(self.neighbours)
 
-            # Total number of features + neighbours considered for node v
+            # M: total number of features + neighbours considered for node v
             self.F = 0
             self.M = self.F+D
 
@@ -296,13 +301,21 @@ class GraphSVX():
 
             # --- EXPLANATION GENERATOR --- 
             # Train Surrogate Weighted Linear Regression - learns shapley values
+            # In the linear regression: y = w_0x_0 + w_1x_1 + .... + w_nx_n + b
+            # phi = (w_0, w_1, ..., w_n) and base_value = b
             phi, base_value = eval('self.' + args_g)(z_, weights, fz,
                                                      multiclass, info)
+            
+            # Time
+            end = time.time()
+            if info:
+                print('Time: ', end - start)
 
+            # Append explanations for this node to list of expl.
             phi_list.append(phi)
             self.base_values.append(base_value)
 
-            return phi_list
+        return phi_list
 
 
     ################################

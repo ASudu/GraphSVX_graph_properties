@@ -15,6 +15,7 @@ from auxillary.io_utils import fix_seed
 from src.data import prepare_data
 from src.explainers import GraphSVX
 from src.train import evaluate, test
+import pandas as pd
 
 
 def main():
@@ -70,8 +71,21 @@ def main():
                                         args.regu,
                                         True)
 
-    print('Sum explanations: ', [np.sum(explanation) for explanation in explanations])
-    print('Base value: ', explainer.base_values)
+    # print('Sum explanations: ', [np.sum(explanation) for explanation in explanations])
+    # print('Base value: ', explainer.base_values)
+
+    # Pair up the phi's and base values
+    expl_save = []
+    for i in range(len(explanations)):
+        expl_save.append([explanations[i],explainer.base_values[i]])
+    
+    # Make dataframe
+    df = pd.DataFrame(expl_save, columns=["Weights of regression","Bias of regression"])
+
+    # Save as csv
+    file_name = './graph_theoretic_properties/' + args.dataset + '_' + args.savefile + '.csv'
+    df.to_csv(file_name)
+    print(f"Explanations saved in {file_name}")
 
 if __name__ == "__main__":
     main()

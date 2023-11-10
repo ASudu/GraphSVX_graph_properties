@@ -96,6 +96,8 @@ def arg_parse():
                         help='True if want to discard full and empty coalitions')
     parser.add_argument("--S", type=int,
                         help='Max size of coalitions sampled in priority and treated specifically')
+    parser.add_argument("--savefile", type=str,
+                        help="Name of the csv file that would store the phi's and base values obtained as explanations")
 
     # args_hv: 'compute_pred', 'compute_pred_subgraph', 'graph_classification'
     # args_feat: 'All', 'Expectation', 'Null'
@@ -118,6 +120,7 @@ def arg_parse():
                         multiclass=False,
                         regu=None,
                         info=False,
+                        savefile='explain_summary',
                         seed=10,
                         gpu=False,
                         cuda='0',
@@ -145,7 +148,7 @@ def arg_parse():
                         num_gc_layers=3,
                         dropout=0.0,
                         weight_decay=0.005,
-                        method='base'
+                        method='base',
                         )
 
     return parser.parse_args()
