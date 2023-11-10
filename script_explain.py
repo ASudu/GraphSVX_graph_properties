@@ -56,6 +56,20 @@ def main():
                                          args.g,
                                          args.regu,
                                          True)
+        
+        # Pair up the phi's and base values
+        expl_save = []
+        for i in range(len(explanations)):
+            expl_save.append([explanations[i],explainer.base_values[i][0],explainer.base_values[i][1]])
+        
+        # Make dataframe
+        df = pd.DataFrame(expl_save, columns=["Weights of regression","Bias of regression","Graph_index"])
+
+        # Save as csv
+        file_name = './graph_theoretic_properties/' + args.dataset + '_' + args.savefile + '.csv'
+        df.to_csv(file_name)
+        print(f"Explanations saved in {file_name}")
+
     else: 
         explanations = explainer.explain(args.indexes,
                                         args.hops,
@@ -70,22 +84,22 @@ def main():
                                         args.g,
                                         args.regu,
                                         True)
+        
+        # Pair up the phi's and base values
+        expl_save = []
+        for i in range(len(explanations)):
+            expl_save.append([explanations[i],explainer.base_values[i]])
+        
+        # Make dataframe
+        df = pd.DataFrame(expl_save, columns=["Weights of regression","Bias of regression"])
+
+        # Save as csv
+        file_name = './graph_theoretic_properties/' + args.dataset + '_' + args.savefile + '.csv'
+        df.to_csv(file_name)
+        print(f"Explanations saved in {file_name}")
 
     # print('Sum explanations: ', [np.sum(explanation) for explanation in explanations])
     # print('Base value: ', explainer.base_values)
-
-    # Pair up the phi's and base values
-    expl_save = []
-    for i in range(len(explanations)):
-        expl_save.append([explanations[i],explainer.base_values[i]])
-    
-    # Make dataframe
-    df = pd.DataFrame(expl_save, columns=["Weights of regression","Bias of regression"])
-
-    # Save as csv
-    file_name = './graph_theoretic_properties/' + args.dataset + '_' + args.savefile + '.csv'
-    df.to_csv(file_name)
-    print(f"Explanations saved in {file_name}")
 
 if __name__ == "__main__":
     main()

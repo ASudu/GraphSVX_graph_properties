@@ -249,14 +249,13 @@ class GraphSVX():
                         and base value
         """
 
-        print(f"Graph indices to explain: {graph_indices}")
+        indices = graph_indices + graph_indices
         # Time
         start = time.time()
 
         # --- Explain several nodes iteratively ---
         phi_list = []
-        print(f"data size (number of graphs): {self.data.num_graphs}")
-        for graph_index in graph_indices:
+        for graph_index in indices:
             print("===============================")
             print(f"Explaining graph #{graph_index}")
             print("===============================")
@@ -313,7 +312,7 @@ class GraphSVX():
 
             # Append explanations for this node to list of expl.
             phi_list.append(phi)
-            self.base_values.append(base_value)
+            self.base_values.append([base_value,graph_index])
 
         return phi_list
 
