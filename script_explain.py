@@ -42,7 +42,7 @@ def main():
     explainer = GraphSVX(data, model, args.gpu)
 
     # Distinguish graph classfication from node classification
-    if args.dataset in ['Mutagenicity', 'syn6']:
+    if args.dataset in ['syn6', 'syn6_id', 'syn6_sim','Mutagenicity']:
         explanations = explainer.explain_graphs(args.indexes,
                                          args.hops,
                                          args.num_samples,

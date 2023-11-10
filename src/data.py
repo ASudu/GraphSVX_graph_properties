@@ -59,15 +59,8 @@ def prepare_data(dataset, train_ratio=0.8, input_dim=None, seed=10):
     elif dataset in ['syn1', 'syn2', 'syn4', 'syn5']:
         data = synthetic_data(dataset, dirname, train_ratio, input_dim)
     
-    elif dataset == 'syn6':
-        data = gc_data(dataset, dirname, train_ratio)
-
-    elif dataset == 'Mutagenicity':
-        data = gc_data(dataset, dirname, train_ratio)
-    
-    elif dataset == 'MNIST':
-        data = gc_data(dataset, dirname, train_ratio)
-    
+    elif dataset in ['syn6','syn6_id','syn6_sim','Mutagenicity','MNIST']:
+        data = gc_data(dataset, dirname, train_ratio)    
 
     return data
 
@@ -318,6 +311,24 @@ def gc_data(dataset, dirname, train_ratio=0.8):
             data = SimpleNamespace()
             with open('data/BA-2motif.pkl', 'rb') as fin:
                 data.edge_index, data.x, data.y = pkl.load(fin)
+            data.x = np.ones_like(data.x)
+        
+        elif dataset == 'syn6_id':      # Identical pairs for consistency
+            data = SimpleNamespace()
+            with open('data/BA-2motif.pkl', 'rb') as fin:
+                data.edge_index, data.x, data.y = pkl.load(fin)
+            data.edge_index = torch.FloatTensor(np.repeat(np.array(data.edge_index), 2))
+            data.x = torch.FloatTensor(np.repeat(np.array(data.x), 2))
+            data.y = torch.FloatTensor(np.repeat(np.array(data.y), 2))
+            data.x = np.ones_like(data.x)
+        
+        elif dataset == 'syn6_sim':     # Similar pairs for continuity
+            data = SimpleNamespace()
+            with open('data/BA-2motif.pkl', 'rb') as fin:
+                data.edge_index, data.x, data.y = pkl.load(fin)
+            data.edge_index = torch.FloatTensor(np.repeat(np.array(data.edge_index), 2))
+            data.x = torch.FloatTensor(np.repeat(np.array(data.x), 2))
+            data.y = torch.FloatTensor(np.repeat(np.array(data.y), 2))
             data.x = np.ones_like(data.x)
         
         elif dataset == 'Mutagenicity':

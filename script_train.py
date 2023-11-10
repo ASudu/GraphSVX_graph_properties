@@ -38,7 +38,7 @@ def main():
         _, test_acc = evaluate(data, model, data.test_mask)
         print('Test accuracy is {:.4f}'.format(test_acc))
 
-    elif args.dataset in ['syn6', 'Mutagenicity']:
+    elif args.dataset in ['syn6', 'syn6_id', 'syn6_sim','Mutagenicity']:
         input_dims = data.x.shape[-1]
         model = GcnEncoderGraph(input_dims,
                             args.hidden_dim,
