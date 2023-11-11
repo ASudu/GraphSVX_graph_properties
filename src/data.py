@@ -310,6 +310,9 @@ def gc_data(dataset, dirname, train_ratio=0.8):
             #G = gengraph.gen_syn6()
             data = SimpleNamespace()
             with open('data/BA-2motif.pkl', 'rb') as fin:
+                # data.edge_index: Adjacency matrices of the 1000 graphs
+                # data.x: The feature matrices for the 1000 graphs
+                # data.y: One-shot encoding of the class label of the graph
                 data.edge_index, data.x, data.y = pkl.load(fin)
             data.x = np.ones_like(data.x)
         
