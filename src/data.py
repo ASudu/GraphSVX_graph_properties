@@ -318,20 +318,20 @@ def gc_data(dataset, dirname, train_ratio=0.8):
         
         elif dataset == 'syn6_id':      # Identical pairs for consistency
             data = SimpleNamespace()
-            with open('data/BA-2motif.pkl', 'rb') as fin:
-                data.edge_index, data.x, data.y = pkl.load(fin)
-            data.edge_index = torch.FloatTensor(np.repeat(np.array(data.edge_index), 2))
-            data.x = torch.FloatTensor(np.repeat(np.array(data.x), 2))
-            data.y = torch.FloatTensor(np.repeat(np.array(data.y), 2))
+            with open('data/syn6_identical.pkl', 'rb') as fin:
+                # data.edge_index: Adjacency matrices of the 1000 graphs
+                # data.x: The feature matrices for the 1000 graphs
+                # data.y: One-shot encoding of the class label of the graph
+                data.indices, data.edge_index, data.x, data.y = pkl.load(fin)
             data.x = np.ones_like(data.x)
         
         elif dataset == 'syn6_sim':     # Similar pairs for continuity
             data = SimpleNamespace()
-            with open('data/BA-2motif.pkl', 'rb') as fin:
-                data.edge_index, data.x, data.y = pkl.load(fin)
-            data.edge_index = torch.FloatTensor(np.repeat(np.array(data.edge_index), 2))
-            data.x = torch.FloatTensor(np.repeat(np.array(data.x), 2))
-            data.y = torch.FloatTensor(np.repeat(np.array(data.y), 2))
+            with open('data/syn6_similar.pkl', 'rb') as fin:
+                # data.edge_index: Adjacency matrices of the 1000 graphs
+                # data.x: The feature matrices for the 1000 graphs
+                # data.y: One-shot encoding of the class label of the graph
+                data.indices, data.edge_index, data.x, data.y = pkl.load(fin)
             data.x = np.ones_like(data.x)
         
         elif dataset == 'Mutagenicity':

@@ -249,7 +249,7 @@ class GraphSVX():
                         and base value
         """
 
-        indices = graph_indices + graph_indices
+        indices = graph_indices
         # Time
         start = time.time()
 

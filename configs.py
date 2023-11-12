@@ -110,7 +110,7 @@ def arg_parse():
     # For graph explanation consistency check: indices = [x for x in range(400, 698) if x % 4 == 0 or x % 4 == 1] (author: Sudarshan)
     parser.set_defaults(dataset='syn1',
                         model='GCN',
-                        indexes = list(range(400,700,5)),
+                        indexes = [x for x in range(400, 698) if x % 4 == 0 or x % 4 == 1],
                         num_samples=400,
                         fullempty=None,
                         S=1,

@@ -60,10 +60,10 @@ def main():
         # Pair up the phi's and base values
         expl_save = []
         for i in range(len(explanations)):
-            expl_save.append([explanations[i],explainer.base_values[i][0],explainer.base_values[i][1]])
+            expl_save.append([data.indices[i],explanations[i],explainer.base_values[i][0],explainer.base_values[i][1]])
         
         # Make dataframe
-        df = pd.DataFrame(expl_save, columns=["Weights of regression","Bias of regression","Graph_index"])
+        df = pd.DataFrame(expl_save, columns=["Data index","Weights of regression","Bias of regression","Graph_index"])
 
         # Save as csv
         file_name = './graph_theoretic_properties/' + args.dataset + '_' + args.savefile + '.csv'
